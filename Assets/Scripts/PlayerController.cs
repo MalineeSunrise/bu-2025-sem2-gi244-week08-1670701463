@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     // 5.8 add audio source variable to play crash sound
     private AudioSource audioSource;
 
+    public Animator animator;
+
     private bool isOnGround = true;
 
     void Awake()
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Physics.gravity *= gravityMultiplier;
+        animator.SetFloat("Speed_f", 1.0f);    
     }
 
     // Update is called once per frame
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
             isOnGround = false;
+            animator.SetTrigger("Jump_trig");
         }
     }
 
@@ -57,6 +61,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Game Over!");
             gameOver = true;
+            animator.SetBool("Death_b", true);
+            animator.SetInteger("DeathType_int", 2);
         }
     }
 }
